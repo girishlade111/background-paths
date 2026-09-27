@@ -1,30 +1,79 @@
 # Background Paths
 
-*Automatically synced with your [v0.app](https://v0.app) deployments*
+An animated SVG hero background component built with React, Tailwind CSS, and Framer Motion. Two layered sets of 36 flowing bezier paths drift across the screen with randomized durations, sitting behind a letter-by-letter spring-animated headline and a glassmorphic CTA button. Light/dark mode aware.
 
-[![Deployed on Vercel](https://img.shields.io/badge/Deployed%20on-Vercel-black?style=for-the-badge&logo=vercel)](https://vercel.com/gileb64375-5584s-projects/v0-background-paths)
-[![Built with v0](https://img.shields.io/badge/Built%20with-v0.app-black?style=for-the-badge)](https://v0.app/chat/projects/s0tVTaWgFab)
+## What it does
 
-## Overview
+- Renders 72 procedurally generated SVG paths (two mirrored `FloatingPaths` layers) that continuously draw themselves via animated `pathLength`/`pathOffset`, producing a soft, flowing "topographic line" backdrop.
+- Reveals the headline one letter at a time with a spring-physics entrance, using gradient-clipped text.
+- Ships a glassmorphic "Discover Excellence" call-to-action button with hover lift and arrow-slide micro-interactions.
+- Adapts to dark mode (`dark:` variants) — white-on-neutral-950 in dark, slate paths on white in light.
 
-This repository will stay in sync with your deployed chats on [v0.app](https://v0.app).
-Any changes you make to your deployed app will be automatically pushed to this repository from [v0.app](https://v0.app).
+## Features
 
-## Deployment
+- **Animated flowing line art** — 36 bezier curves per layer, each with unique width, opacity, and 20–30s loop duration
+- **Letter-by-letter title reveal** — staggered spring animation, configurable via the `title` prop (default `"Background Paths"`)
+- **Glassmorphism CTA** — backdrop-blurred, gradient-bordered button with hover states
+- **Dark mode support** — CSS-driven via Tailwind's dark variant
+- **Pointer-events safe** — the SVG layer is non-interactive, so it never blocks clicks
 
-Your project is live at:
+## Tech stack
 
-**[https://vercel.com/gileb64375-5584s-projects/v0-background-paths](https://vercel.com/gileb64375-5584s-projects/v0-background-paths)**
+- **React** (client component, `"use client"`)
+- **Framer Motion** (`motion` primitives: `motion.path`, `motion.span`, `motion.div`)
+- **Tailwind CSS** (layout, gradients, dark-mode variants)
+- **shadcn/ui** `Button` component (`@/components/ui/button`)
+- **TypeScript** (`.tsx`)
 
-## Build your app
+## Quick start
 
-Continue building your app on:
+This repo ships just the component. To use it in a Next.js/Tailwind project with Framer Motion and shadcn/ui installed:
 
-**[https://v0.app/chat/projects/s0tVTaWgFab](https://v0.app/chat/projects/s0tVTaWgFab)**
+```bash
+# 1. Install dependencies
+npm install framer-motion
 
-## How It Works
+# 2. Copy the component into your project
+cp components/kokonutui/background-paths.tsx your-project/components/
 
-1. Create and modify your project using [v0.app](https://v0.app)
-2. Deploy your chats from the v0 interface
-3. Changes are automatically pushed to this repository
-4. Vercel deploys the latest version from this repository
+# 3. Render it anywhere
+import BackgroundPaths from "@/components/background-paths"
+
+export default function Page() {
+  return <BackgroundPaths title="Your headline here" />
+}
+```
+
+Required peer dependencies in the host project:
+
+- `framer-motion`
+- `tailwindcss` (with dark mode configured)
+- `@/components/ui/button` from shadcn/ui
+
+Props:
+
+| Prop    | Type     | Default            | Description                          |
+| ------- | -------- | ------------------ | ------------------------------------ |
+| `title` | `string` | `"Background Paths"` | Headline rendered letter by letter |
+
+## Project structure
+
+```
+background-paths/
+├── README.md
+└── components/
+    └── kokonutui/
+        └── background-paths.tsx   # FloatingPaths layers + headline + CTA
+```
+
+## Environment variables
+
+None.
+
+## Deployment notes
+
+There is nothing to deploy — this repository contains a single reusable UI component, not a runnable app. To preview it, drop it into a Next.js + Tailwind + Framer Motion project and render `<BackgroundPaths />`. It was originally generated with [v0](https://v0.app) (see commit history).
+
+---
+
+Built by Girish Lade — [ladestack.in](https://ladestack.in)
